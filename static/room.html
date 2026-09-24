@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Humsync · Room</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body class="app">
+<header>
+  <div class="brand"><a href="/">► Humsync</a></div>
+  <div class="roommeta">
+    <span class="pill">Room <b id="room-code">…</b></span>
+    <span id="conn" class="conn connecting">connecting…</span>
+    <span id="sync-stats" class="syncstats"></span>
+  </div>
+</header>
+
+<main>
+  <!-- Now playing -->
+  <section class="stage">
+    <div class="np">
+      <img id="np-art" class="art" alt="" />
+      <div class="np-meta">
+        <div id="np-title" class="np-title">Nothing playing</div>
+        <div id="np-sub" class="np-sub"></div>
+      </div>
+      <div class="np-controls">
+        <button id="btn-prev" class="btn" title="Previous">⏮</button>
+        <button id="btn-play" class="btn big" title="Play / Pause">▶</button>
+        <button id="btn-next" class="btn" title="Next">⏭</button>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <span id="t-cur" class="time">0:00</span>
+      <input id="progress" class="progress" type="range" min="0" max="100" value="0" />
+      <span id="t-dur" class="time">0:00</span>
+    </div>
+
+    <div class="volrow">
+      <label>🔈 Local</label>
+      <input id="vol" type="range" min="0" max="100" value="100" />
+      <label id="gvolwrap" class="ghost" style="display:none">🌐 Global
+        <input id="gvol" type="range" min="0" max="100" value="100" />
+      </label>
+    </div>
+  </section>
+
+  <div class="grid">
+    <!-- Queue -->
+    <section class="panel">
+      <h2>Queue</h2>
+      <div id="queue" class="list"></div>
+    </section>
+
+    <!-- Controller tools -->
+    <section class="panel" id="main-controls">
+      <h2>Controller</h2>
+      <div class="toolrow">
+        <input id="q" type="text" placeholder="Search YouTube…" />
+        <button id="btn-search" class="btn primary">Search</button>
+      </div>
+      <div id="search-results" class="list"></div>
+      <div class="toolrow">
+        <input id="url" type="text" placeholder="Paste a YouTube link…" />
+        <button id="btn-addurl" class="btn primary">Add</button>
+      </div>
+      <div class="toolrow">
+        <label class="uploadbtn">📁 Upload local file
+          <input id="file" type="file" accept="audio/*,.mp3,.m4a,.ogg,.opus,.wav,.flac" hidden />
+        </label>
+      </div>
+    </section>
+
+    <!-- Lyrics -->
+    <section class="panel">
+      <h2>Lyrics</h2>
+      <div id="lyrics" class="list lyrics"></div>
+    </section>
+
+    <!-- Devices -->
+    <section class="panel">
+      <h2>Devices</h2>
+      <div id="devices" class="list"></div>
+    </section>
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<script src="/app.js?v=HUMSYNC-1"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+# Secrets — never commit (contains YOUTUBE_API_KEY)
+.env
+
+# Runtime / user content
+uploads/
+cache/
+__pycache__/
+*.pyc
+
+# Server + probe logs
+*.log
+*.err
+*.err.log
+run_*.txt
+srv_*.txt
+smoke_out.txt
+
+# Dev/debug/probe scripts (session scratch work, not part of the app)
+*_probe.py
+*_test.py
+*check*.py
+*boot*.py
+*ws_*.py
+*phone*.py
+*lan_*.py
+*search_*probe*.py
+*admin*.py
+*auth*.py
+*authoritative*.py
+*bootstrap*.py
+*dual*.py
+*e2e*.py
+*emit*.py
+*finn*.py
+*fresh*.py
+*golden*.py
+*open_*.py
+*probe*.py
+*routefix*.py
+*status*.py
+*verify*.py
+*appjs_*.py
+*api_search_test.py
+*direct_search_test.py
+*full_chain_probe.py
+*lan_phone_final_check.py
+*lyrics_probe.py
+*no_admin*.py
+*queue_add_probe.py
+*smoke_test.py
+*server_recovered.py
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

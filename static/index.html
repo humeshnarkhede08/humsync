@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Humsync</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<main class="landing">
+  <div class="brand">
+    <div class="logo">►►</div>
+    <h1>Humsync</h1>
+    <p class="tag">Ek site, har device pe sync gaane</p>
+  </div>
+
+  <div class="card">
+    <h2>Create a room</h2>
+    <p class="hint">Jo device room banayega, wahi controller hoga</p>
+    <input id="name" type="text" maxlength="24" placeholder="Your name" />
+    <input id="lk" type="text" maxlength="24" placeholder="Link/ID (optional)" />
+    <button id="create" class="primary">Create room</button>
+  </div>
+
+  <div class="card">
+    <h2>Join a room</h2>
+    <p class="hint">Room code inwite se lo</p>
+    <input id="code" type="text" maxlength="6" placeholder="Room code (e.g. A1B2C3)" />
+    <input id="jname" type="text" maxlength="24" placeholder="Your name" />
+    <button id="join" class="primary">Join room</button>
+  </div>
+
+  <div id="toast"></div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+function toast(text) {
+  const el = $("toast");
+  el.textContent = text;
+  el.classList.add("show");
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove("show"), 3500);
+}
+
+function getOrStoreName(inputId, key) {
+  const v = $(inputId).value.trim() || localStorage.getItem(key) || "Guest";
+  if (v) localStorage.setItem(key, v);
+  return v;
+}
+
+$("create").onclick = async () => {
+  const name = getOrStoreName("name", "beatsync_name");
+  try {
+    const r = await fetch("/api/rooms", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: name }),
+    });
+    if (!r.ok) return toast("Failed to create room");
+    const d = await r.json();
+    location.href = `/room?roomId=${d.roomId}`;
+  } catch (e) {
+    toast("Connection failed");
+  }
+};
+
+$("join").onclick = async () => {
+  const name = getOrStoreName("jname", "beatsync_name");
+  const code = $("code").value.trim().toUpperCase();
+  if (!code) return toast("Enter a room code");
+  try {
+    const r = await fetch("/api/rooms/join", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ roomId: code, username: name }),
+    });
+    if (!r.ok) return toast("Room not found");
+    location.href = `/room?roomId=${code}`;
+  } catch (e) {
+    toast("Connection failed");
+  }
+};
+
+$("code").addEventListener("keydown", (e) => e.key === "Enter" && $("join").click());
+$("name").addEventListener("keydown", (e) => e.key === "Enter" && $("create").click());
+</script>
+</body>
+</html>
