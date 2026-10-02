@@ -100,6 +100,10 @@ YTDLP_OPTS = {
     "socket_timeout": 30,
     "continuedl": True,
     "concurrent_fragment_downloads": 4,
+    # tv_embedded first: full format list incl. audio-only (bypasses the
+    # "Failed to extract any player response" bot-check blocking datacenter
+    # IPs); android/web as extraction fallbacks.
+    "extractor_args": {"youtube": {"player_client": ["tv_embedded", "android", "web"]}},
     "http_headers": {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
