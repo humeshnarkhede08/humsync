@@ -704,6 +704,9 @@ async def websocket_endpoint(websocket: WebSocket, room_id: str):
 # NOTE: mounts must come AFTER all API routes. A "/" mount shadows anything
 # registered after it (POST /api/... would 405). Keep this here, never above
 # the route definitions.
+# mkdir first: fresh clones (Render) don't have uploads/ (gitignored) and
+# StaticFiles crashes on a missing directory at startup.
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
